@@ -1,0 +1,43 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="background: #f3f4f6;">
+  <div class="w-100" style="max-width: 440px;">
+    <h1 class="text-center mb-4" style="font-size: 50px; color: #111827;">Sign up</h1>
+
+    <div id="form">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        
+        <div>
+          <%= f.label :name, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "you name", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div>
+          <%= f.label :email, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <% if @minimum_password_length %>
+           (<%= @minimum_password_length %> characters minimum)
+           
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "confirm password", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div class="d-grid mt-3">
+          <%= f.submit "Sign up", class: "btn w-100", style: "background-color: #3b82f6; color: white; font-weight: bold; border-radius: 20px;" %>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-3 small text-muted">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

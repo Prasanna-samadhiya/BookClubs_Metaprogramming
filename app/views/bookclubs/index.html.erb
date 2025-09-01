@@ -1,0 +1,84 @@
+<% if user_signed_in? %>
+   <div class="container" style="padding: 50px 15px;">
+  <div class="row justify-content-center">
+
+    <div class="col-md-5" style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 30px; margin-right: 20px;">
+      <h2 style="text-align: center; font-size: 28px; color: #0d6efd; margin-bottom: 30px;">📘 Create Book Club</h2>
+
+      <%= form_with(model: Bookclub.new, url: action_bookclubs_path(do: "create"), local: true) do |form| %>
+        <div class="mb-3">
+          <%= form.label :name, "Club Name", style: "font-weight: bold; color: #111827;" %>
+          <%= form.text_field :name, placeholder: "e.g. Ruby Readers", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div class="d-grid mt-3">
+          <%= form.submit "Create", class: "btn btn-primary", style: "border-radius: 20px; font-weight: bold;" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-6" style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 30px;">
+      <h2 style="text-align: center; font-size: 28px; color: #198754; margin-bottom: 30px;">📚 All Book Clubs</h2>
+
+      <% if @bookclubs.any? %>
+        <ul class="list-group">
+          <% @bookclubs.each do |bookclub| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="border-radius: 8px; margin-bottom: 10px;">
+              <span><strong><%= bookclub.name %></strong></span>
+              <div style="display:flex; flex-direction:row; gap:20px;">
+                <%= button_to "Join",
+                      action_bookclub_path(bookclub, do: "join"),
+                      method: :post,
+                      data: { confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-primary" %>
+
+                <%= link_to "View",
+                      action_bookclub_path(bookclub, do: "show"),
+                      class: "btn btn-sm btn-info text-white" %>
+
+                <%= button_to "Delete",
+                      action_bookclub_path(bookclub, do: "destroy"),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-outline-danger" %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p style="text-align: center; color: #6c757d;">No book clubs yet. Create one to get started!</p>
+      <% end %>
+
+        <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-outline-primary" %>
+    </div>
+
+  </div>
+</div>
+
+<% if user_signed_in? && current_user.bookclubs.any? %>
+  <div class="mt-5 p-4" style="  display:flex; flex-direction:column; justify-content:center; align-items:center">
+    <div class="p-4" style="width:500px; background-color:#e0f2fe;border-radius:12px;">
+    <h3 class="text-success mb-3">👥 <%= current_user.name %> 's Book Clubs</h3>
+    <ul class="list-group" style="gap:20px">
+      <% current_user.bookclubs.each do |club| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-radius: 8px;">
+          <%= club.name %>
+          <%= button_to "Leave",
+                action_bookclub_path(club, do: "leave"),
+                method: :delete,
+                data: { confirm: "Are you sure you want to leave this club?" },
+                class: "btn btn-sm btn-warning" %>
+        </li>
+      <% end %>
+    </ul>
+    </div>
+  </div>
+<% elsif user_signed_in? %>
+  <p class="text-muted mt-5">You haven’t joined any book clubs yet.</p>
+<% end %>
+
+<% else %>
+    <div class="text-center mt-4">
+        <%= button_to 'Sign in', new_user_session_path, method: :get, class: "btn btn-outline-primary" %>
+</div>
+<% end %>

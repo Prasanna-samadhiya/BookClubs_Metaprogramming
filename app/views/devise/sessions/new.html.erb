@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="background: #f3f4f6;">
+  <div class="w-100" style="max-width: 460px;">
+    <h1 class="text-center mb-4" style="font-size: 50px; color: #111827;">Log in to your account</h1>
+
+    <div id="form">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div>
+          <%= f.label :email, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: "form-label fw-semibold", style: "color: #111827;" %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", class: "form-control", style: "border-radius: 8px;" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="form-check" style="display:flex;gap:20px;">
+            <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
+            <%= f.label :remember_me, class: "form-check-label", for: "remember_me", style: "color: #111827;" %>
+          </div>
+        <% end %>
+
+        <%= f.submit "Log in", class: "btn w-100", style: "background-color: #3b82f6; color: white; font-weight: bold; border-radius: 20px;" %>
+      <% end %>
+
+      <div class="text-center mt-3 small text-muted"   style="display:flex;gap:30px">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
